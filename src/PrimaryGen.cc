@@ -28,6 +28,8 @@ PrimaryGen::PrimaryGen()
 
    gun->SetNumberOfParticles(1);
 
+   GPSgun = new G4GeneralParticleSource();
+
 #ifdef SingleEnergy
     gun->SetParticleEnergy(0.025*eV);
 #endif
@@ -171,6 +173,7 @@ PrimaryGen::~PrimaryGen()
 #endif
 
 delete gun;
+delete GPSgun;
 
 delete primarygenmessenger1;
 delete primarygenmessenger2;
@@ -216,19 +219,17 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
 //    gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
 //
 //    set the square beam particle distribution
-
-    G4double XY=1.49*cm;
-    G4double Z = 0.049*cm;
-
-    double ux = XY*(2*G4UniformRand()-1);
-    double uy = XY*(2*G4UniformRand()-1);
-    double uz = 5*cm+Z*(2*G4UniformRand()-1);
-
-
-    gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
+//
+//    G4double XY=1.49*cm;
+//    G4double Z = 0.049*cm;
+//
+//    double ux = XY*(2*G4UniformRand()-1);
+//    double uy = XY*(2*G4UniformRand()-1);
+//    double uz = 5*cm+Z*(2*G4UniformRand()-1);
+//    gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
 
 
-//    gun->SetParticlePosition(G4ThreeVector(0,0,5*cm));
+    gun->SetParticlePosition(G4ThreeVector(0,0,5*cm));
 
     double dX, dY, dZ;
 
@@ -239,13 +240,15 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
     dY = sinTheta*std::sin(phi),
     dZ = cosTheta;
 
-//    gun->SetParticleMomentumDirection(G4ThreeVector(dX,dY,dZ));
+    gun->SetParticleMomentumDirection(G4ThreeVector(dX,dY,dZ));
 
 
-    gun->SetParticleMomentumDirection(G4ThreeVector(0,0,-1));
+//    gun->SetParticleMomentumDirection(G4ThreeVector(0,0,-1));
 
 
     gun->GeneratePrimaryVertex(anEvent);
+
+//    GPSgun->GeneratePrimaryVertex(anEvent);
 
 
 

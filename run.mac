@@ -19,7 +19,7 @@
 /gps/particle neutron
 #
 /gps/pos/type Point
-/gps/pos/centre 0.0 0.0 0.0 m
+/gps/pos/centre 0.0 0.0 0.05 m
 /gps/ang/type iso
 #
 # /gps/pos/type Beam
@@ -88,5 +88,5 @@
 #
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
-
+/run/beamOn 100000
 

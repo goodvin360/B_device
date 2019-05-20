@@ -26,8 +26,8 @@ public:
 
     void AddEvent2(G4double energy2);
 
-    int nStep = 5000;
-    G4double Emax = 5.0*MeV;
+    int nStep = 10000;
+    G4double Emax = 10.0*MeV;
     double a = 0.00001;
     double b = 0.000002;
 

@@ -1,5 +1,5 @@
-#define Tube_With_Mixture
-#define Cadmium_Shield
+//#define Tube_With_Mixture
+//#define Cadmium_Shield
 
 
 #include "DetGeometry.hh"
@@ -468,7 +468,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     // create an He3 counter housing
 
-    G4ThreeVector Counter_pos = G4ThreeVector(0*cm, 0*cm, -30*cm);
+    G4ThreeVector Counter_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
 
     G4Tubs*Counter0 = new G4Tubs("Counter0", 0*cm, 1*cm, 2.1*cm, 0*deg, 360*deg);
 
@@ -492,7 +492,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     // filling helium counter with He3 isotope
 
-    G4ThreeVector He3_pos = G4ThreeVector(0*cm, 0*cm, -30*cm);
+    G4ThreeVector He3_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
 
     G4Tubs*He3_gas = new G4Tubs("He3_gas", 0*cm, 0.9*cm, 2*cm, 0*deg, 360*deg);
 

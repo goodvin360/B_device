@@ -21,13 +21,10 @@ void StepAct::UserSteppingAction(const G4Step *aStep)
 
 
     if
-       (aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="Sample" &&
-        aStep->GetTrack()->GetParticleDefinition()->GetParticleName()=="neutron" )
+       (aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="He3_gas")
 
     {
-
         event->AddEnDep2(aStep->GetTotalEnergyDeposit());
-
     };
 
 
