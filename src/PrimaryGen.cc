@@ -209,14 +209,14 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
 
     //set the cylinder beam particle distribution
 
-//    G4double R=0.1*cm;
-//    G4double cosTheta = 2*G4UniformRand()-1., phi = twopi*G4UniformRand();
-//    G4double sinTheta = std::sqrt(1. - cosTheta*cosTheta);
-//    G4double ux = R*sinTheta*std::sin(phi),
-//            uy = R*cosTheta,
-//            uz = 5*cm;
-//
-//    gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
+    G4double R=5*cm;
+    G4double cosTheta1 = 2*G4UniformRand()-1., phi1 = twopi*G4UniformRand();
+    G4double sinTheta1 = std::sqrt(1. - cosTheta1*cosTheta1);
+    G4double ux = R*sinTheta1*std::sin(phi1),
+            uy = R*cosTheta1,
+            uz = (2*G4UniformRand()-1)*5*cm;
+
+    gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
 //
 //    set the square beam particle distribution
 //
@@ -229,7 +229,7 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
 //    gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
 
 
-    gun->SetParticlePosition(G4ThreeVector(0,0,5*cm));
+//    gun->SetParticlePosition(G4ThreeVector(0,0,7*cm));
 
     double dX, dY, dZ;
 

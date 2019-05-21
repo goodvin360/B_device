@@ -13,7 +13,9 @@ void StepAct::UserSteppingAction(const G4Step *aStep)
 {
 
 
-    if (aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="Source")
+    if ((aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="Source") &&
+            (aStep->GetTrack()->GetDynamicParticle()->GetParticleDefinition()->GetParticleName()=="neutron")
+    )
 
     {
         event->AddEnDep1(aStep->GetTrack()->GetKineticEnergy());

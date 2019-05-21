@@ -1,4 +1,4 @@
-//#define Tube_With_Mixture
+#define Tube_With_Mixture
 //#define Cadmium_Shield
 
 
@@ -157,9 +157,9 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     G4double size_of_sourse = 1*cm;
 
-    G4ThreeVector InSp_det_pos = G4ThreeVector(0*cm, 0*cm, 5*cm);
+    G4ThreeVector InSp_det_pos = G4ThreeVector(0*cm, 0*cm, 7*cm);
 
-    G4Sphere*InSp_det = new G4Sphere("Source", 0.1*size_of_sourse, 0.2*size_of_sourse, 0*deg, 360*deg, 0*deg, 360*deg);
+    G4Sphere*InSp_det = new G4Sphere("Source", 0.1*size_of_sourse, 0.5*size_of_sourse, 0*deg, 360*deg, 0*deg, 360*deg);
 
     G4LogicalVolume*logicInSpDet = new G4LogicalVolume(InSp_det, InSp_det_mat, "Source");
 
@@ -176,161 +176,6 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
                       false,
                       0);
 
-    // create an OUTER SPHERE detector
-
-//    G4Material*OuSp_det_mat = nist->FindOrBuildMaterial("G4_BGO");
-//
-//    G4double OuSp_size_of_det = 1*cm;
-//
-//    G4ThreeVector OuSp_det_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
-//
-//    G4Sphere*OuSp_det = new G4Sphere("OuSpDetector", 15*OuSp_size_of_det, 16*OuSp_size_of_det, 0.*deg, 360.*deg, 0.*deg, 90.*deg);
-//
-//    G4LogicalVolume*logicOuSpDet = new G4LogicalVolume(OuSp_det, OuSp_det_mat, "OuSpDetector");
-//
-//    G4VisAttributes*logicOutSpDet = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
-//
-//    logicOuSpDet->SetVisAttributes(logicOutSpDet);
-//
-//
-//    new G4PVPlacement(0,
-//                      OuSp_det_pos,
-//                      logicOuSpDet,
-//                      "OuSpDetector",
-//                      logicWorld,
-//                      false,
-//                      0);
-
-
-//    create an CYLLINDER detector
-
-//        G4String name, symbol;
-//    G4double a, z, det_density;
-//    G4int ncomponents;
-//    G4int natoms;
-//    a = 80.9058*g/mole;
-//    G4Element*elY = new G4Element(name="Yttrium", symbol="Y", z = 39., a);
-//    a = 26.9816*g/mole;
-//    G4Element*elAl = new G4Element(name="Aluminium", symbol="Al", z = 13., a);
-//    a = 16*g/mole;
-//    G4Element*elO = new G4Element(name="Oxygen", symbol="O", z = 8., a);
-//    a = 1*g/mole;
-//    G4Element*elH = new G4Element(name="Hydrogen", symbol="H", z = 1., a);
-//    det_density = 5.37*g/cm3;
-//    G4Material*det_mat2 = new G4Material(name="Detector_material", det_density, ncomponents = 3);
-//    det_mat2->AddElement(elY, natoms = 1);
-//    det_mat2->AddElement(elAl, natoms = 1);
-//    det_mat2->AddElement(elO, natoms = 3);
-
-//    G4Material*det_mat = nist->FindOrBuildMaterial("G4_Ge");
-//
-//    G4ThreeVector det_pos = G4ThreeVector(0*cm, 0*cm, -9.8*cm);
-//
-//    G4Tubs*det = new G4Tubs("Detector", 0.0*cm, 2.4*cm, 1.5*cm,  0*deg, 360*deg);
-//
-//    G4LogicalVolume*logicDet = new G4LogicalVolume(det, det_mat, "Detector");
-//
-//    G4VisAttributes*logicVisDet = new G4VisAttributes(G4Colour(0.0, 0.0, 1.0));
-//
-//    logicDet->SetVisAttributes(logicVisDet);
-//
-//    G4RotationMatrix* myRotation = new G4RotationMatrix();
-//    myRotation->rotateX(90.*deg);
-//    myRotation->rotateY(0.*deg);
-//    myRotation->rotateZ(0.*rad);
-//
-//    new G4PVPlacement(0,
-//                      det_pos,
-//                      logicDet,
-//                      "Detector",
-//                      logicWorld,
-//                      false,
-//                      0);
-//
-//
-//
-//    //    create an CYLLINDER conteiner of Al
-//
-//
-//    G4Material*sub_mat1 = nist->FindOrBuildMaterial("G4_Al");
-//
-//    G4ThreeVector sub1_pos = G4ThreeVector(0*cm, 0*cm, -20*cm);
-//
-//    G4Tubs*tub0 = new G4Tubs("Tub0", 0*cm, 2.8*cm, 12*cm, 0*deg, 360*deg);
-//
-//    G4Tubs*tub1 = new G4Tubs("Tub1", 0*cm, 2.677*cm, 11.877*cm, 0*deg, 360*deg);
-//
-//    G4SubtractionSolid*Sub1 = new G4SubtractionSolid ("Sub1", tub0, tub1);
-//    G4LogicalVolume*logicSub1 = new G4LogicalVolume(Sub1, sub_mat1, "Sub1");
-//    G4VisAttributes*logicSub1colour = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
-//    logicSub1->SetVisAttributes(logicSub1colour);
-//
-//
-//    new G4PVPlacement(0,
-//                      sub1_pos,
-//                      logicSub1,
-//                      "Sub1",
-//                      logicWorld,
-//                      false,
-//                      0);
-//
-//   //    create an CYLLINDER conteiner of Pb
-//
-//
-//   G4Material*tub_mat2 = nist->FindOrBuildMaterial("G4_Pb");
-//
-//   G4ThreeVector tub2_pos = G4ThreeVector(0*cm, 0*cm, -10*cm);
-//
-//   G4Tubs*Tub2 = new G4Tubs("Tub2", 4*cm, 8*cm, 10*cm, 0*deg, 360*deg);
-//
-//   G4LogicalVolume*logicTub2 = new G4LogicalVolume(Tub2, tub_mat2, "Tub2");
-//   G4VisAttributes*logicTub2colour = new G4VisAttributes(G4Colour(0.0, 1.0, 0.0));
-//   logicTub2->SetVisAttributes(logicTub2colour);
-//
-//
-//   new G4PVPlacement(0,
-//                     tub2_pos,
-//                     logicTub2,
-//                     "Tub2",
-//                     logicWorld,
-//                     false,
-//                     0);
-//
-//    G4ThreeVector tub3_pos = G4ThreeVector(0*cm, 0*cm, 2*cm);
-//
-//    G4Tubs*Tub3 = new G4Tubs("Tub3", 2.7*cm, 8*cm, 2*cm, 0*deg, 360*deg);
-//
-//    G4LogicalVolume*logicTub3 = new G4LogicalVolume(Tub3, tub_mat2, "Tub3");
-//    G4VisAttributes*logicTub3colour = new G4VisAttributes(G4Colour(0.0, 1.0, 0.0));
-//    logicTub3->SetVisAttributes(logicTub3colour);
-//
-//
-//    new G4PVPlacement(0,
-//                      tub3_pos,
-//                      logicTub3,
-//                      "Tub3",
-//                      logicWorld,
-//                      false,
-//                      0);
-//
-//    G4ThreeVector tub4_pos = G4ThreeVector(0*cm, 0*cm, -10*cm);
-//
-//    G4Tubs*Tub4 = new G4Tubs("Tub4", 3.9*cm, 4*cm, 10*cm, 0*deg, 360*deg);
-//
-//    G4LogicalVolume*logicTub4 = new G4LogicalVolume(Tub4, sub_mat1, "Tub4");
-//    G4VisAttributes*logicTub4colour = new G4VisAttributes(G4Colour(0.5, 0.5, 5.0));
-//    logicTub4->SetVisAttributes(logicTub4colour);
-//
-//
-//    new G4PVPlacement(0,
-//                      tub4_pos,
-//                      logicTub4,
-//                      "Tub4",
-//                      logicWorld,
-//                      false,
-//                      0);
-
-
 // Define meterials (Boric Acid, Water, Helium etc.)
 
     G4String name,symbol;
@@ -343,7 +188,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     G4double He3_temp, He3_press, He3_density;
 
     He3_temp = 300*kelvin;
-    He3_press = 0.1*atmosphere;
+    He3_press = 10*atmosphere;
     He3_density = 0.001*g/cm3;
     temperature = 300.*kelvin;
     pressure = 1.*atmosphere;
@@ -426,7 +271,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     //Define Boric Acid mix with Water (place in space)
 
-    G4ThreeVector Mix_pos = G4ThreeVector(0*cm, 0*cm, -15*cm);
+    G4ThreeVector Mix_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
 
     G4Tubs*Mix = new G4Tubs("Mixture", 0*cm, 5*cm, 5*cm, 0*deg, 360*deg);
 
@@ -446,7 +291,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     // create an Tube part (Mixture housing)
 
-    G4ThreeVector Tube_pos = G4ThreeVector(0*cm, 0*cm, -15*cm);
+    G4ThreeVector Tube_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
 
     G4Tubs*Tube = new G4Tubs("MixTube", 5*cm, 6*cm, 5*cm, 0*deg, 360*deg);
 
@@ -468,7 +313,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     // create an He3 counter housing
 
-    G4ThreeVector Counter_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
+    G4ThreeVector Counter_pos = G4ThreeVector(0*cm, 0*cm, -8*cm);
 
     G4Tubs*Counter0 = new G4Tubs("Counter0", 0*cm, 1*cm, 2.1*cm, 0*deg, 360*deg);
 
@@ -492,7 +337,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     // filling helium counter with He3 isotope
 
-    G4ThreeVector He3_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
+    G4ThreeVector He3_pos = G4ThreeVector(0*cm, 0*cm, -8*cm);
 
     G4Tubs*He3_gas = new G4Tubs("He3_gas", 0*cm, 0.9*cm, 2*cm, 0*deg, 360*deg);
 
@@ -513,7 +358,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 #ifdef Cadmium_Shield
     // create an Cadmium shield
 
-    G4ThreeVector Shield_pos = G4ThreeVector(0*cm, 0*cm, -30*cm);
+    G4ThreeVector Shield_pos = G4ThreeVector(0*cm, 0*cm, -8*cm);
 
     G4Tubs*Shield0 = new G4Tubs("Shield0", 0*cm, 1.1*cm, 2.2*cm, 0*deg, 360*deg);
 
