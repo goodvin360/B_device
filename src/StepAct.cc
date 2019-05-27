@@ -13,8 +13,9 @@ void StepAct::UserSteppingAction(const G4Step *aStep)
 {
 
 
-    if ((aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="Source") &&
-            (aStep->GetTrack()->GetDynamicParticle()->GetParticleDefinition()->GetParticleName()=="neutron")
+    if ((aStep->GetPreStepPoint()->GetPhysicalVolume()->GetLogicalVolume()->GetName()=="Source") &&
+            (aStep->GetTrack()->GetDynamicParticle()->GetParticleDefinition()->GetParticleName()=="neutron") &&
+            (aStep->GetPostStepPoint()->GetStepStatus()==fGeomBoundary)
     )
 
     {
@@ -23,10 +24,17 @@ void StepAct::UserSteppingAction(const G4Step *aStep)
 
 
     if
-       (aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="He3_gas")
+       (aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="He3_gas1")   //this is counter with Cd shielding
 
     {
         event->AddEnDep2(aStep->GetTotalEnergyDeposit());
+    };
+
+    if
+            (aStep->GetTrack()->GetVolume()->GetLogicalVolume()->GetName() =="He3_gas2")
+
+    {
+        event->AddEnDep3(aStep->GetTotalEnergyDeposit());
     };
 
 

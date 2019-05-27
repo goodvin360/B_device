@@ -17,6 +17,7 @@
 #include "G4Tubs.hh"
 
 #include "G4VUserDetectorConstruction.hh"
+#include "PrimaryGen.hh"
 
 class G4VPhysicalVolume;
 class G4LogicalVolume;
@@ -31,6 +32,8 @@ private:
    //  G4LogicalVolume*            logicWorld;
     virtual G4VPhysicalVolume*  Construct();
     G4VPhysicalVolume*          physWorld;
+
+
 public:
     DetGeometry();
     virtual ~DetGeometry();

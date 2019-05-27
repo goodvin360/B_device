@@ -30,6 +30,8 @@ PrimaryGen::PrimaryGen()
 
    GPSgun = new G4GeneralParticleSource();
 
+
+
 #ifdef SingleEnergy
     gun->SetParticleEnergy(0.025*eV);
 #endif
@@ -207,16 +209,24 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
     gun->SetParticleEnergy(it->second*MeV);
 #endif
 
-    //set the cylinder beam particle distribution
 
-    G4double R=5*cm;
+
+
+    //set the cylindric source particle distribution
+
+    G4double R=1.5*cm;
     G4double cosTheta1 = 2*G4UniformRand()-1., phi1 = twopi*G4UniformRand();
     G4double sinTheta1 = std::sqrt(1. - cosTheta1*cosTheta1);
     G4double ux = R*sinTheta1*std::sin(phi1),
             uy = R*cosTheta1,
-            uz = (2*G4UniformRand()-1)*5*cm;
+            uz = 12*cm+(2*G4UniformRand()-1)*1.5*cm;
 
     gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
+
+
+
+
+
 //
 //    set the square beam particle distribution
 //

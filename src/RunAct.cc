@@ -15,6 +15,8 @@ RunAct::RunAct()
 
     result2 = new std::map<G4double, G4int>;
 
+    result3 = new std::map<G4double, G4int>;
+
 
 }
 
@@ -23,6 +25,8 @@ RunAct::~RunAct()
     delete result1;
 
     delete result2;
+
+    delete result3;
 
 
 }
@@ -39,22 +43,29 @@ void RunAct::BeginOfRunAction(const G4Run *aRun)
     for (int i=0; i <nStep; i++)
         result2->insert(std::pair<G4double, G4int> (i *Emax / nStep, 0));
 
+    result3->clear();
+    for (int i=0; i <nStep; i++)
+        result3->insert(std::pair<G4double, G4int> (i *Emax / nStep, 0));
+
 }
 
 
 void RunAct::EndOfRunAction(const G4Run *aRun)
 {
     fstream fout1("/mnt/hgfs/VMplayer/B_device/Source.txt", ios::out);
-//    fstream fout1("../YAP.txt", ios::out);
     for (auto it1: *result1)
         fout1 << it1.first << " " << it1.second << '\n';
     fout1.close();
 
-    fstream fout2("/mnt/hgfs/VMplayer/B_device/Detector.txt", ios::out);
-//    fstream fout2("../CH.txt", ios::out);
+    fstream fout2("/mnt/hgfs/VMplayer/B_device/Detector_No_1.txt", ios::out);
     for (auto it2: *result2)
         fout2 << it2.first << " " << it2.second << '\n';
     fout2.close();
+
+    fstream fout3("/mnt/hgfs/VMplayer/B_device/Detector_No_2.txt", ios::out);
+    for (auto it3: *result3)
+        fout3 << it3.first << " " << it3.second << '\n';
+    fout3.close();
 
 //    auto P1 = new double *[nStep];
 //    for (int i = 0; i < nStep; i++) {
@@ -174,6 +185,13 @@ void RunAct::AddEvent2(G4double energy2)
 
 }
 
+
+void RunAct::AddEvent3(G4double energy3)
+{
+    auto it2 = result3->lower_bound(energy3);
+    it2->second++;
+
+}
 
 
 

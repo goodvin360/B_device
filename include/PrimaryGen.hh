@@ -29,6 +29,7 @@
 #include <iostream>
 #include <stdio.h>
 
+
 #include "math.h"
 
 using namespace std;
@@ -37,7 +38,6 @@ class G4ParticleGun;
 class G4Event;
 class PrimaryGenMessenger1;
 class PrimaryGenMessenger2;
-
 
 class PrimaryGen : public G4VUserPrimaryGeneratorAction
 {
@@ -62,7 +62,6 @@ private:
     virtual ~PrimaryGen();
     virtual void GeneratePrimaries(G4Event*);
 
-
     void SetParticleCounts(G4double newValue)
     {
         PCounts = newValue;
@@ -73,7 +72,7 @@ private:
         Step = newValue;
     }
 
-    G4String outerspectrapath = "/home/user/CLionProjects/B_device/Fission.txt";
+    G4String outerspectrapath = "/home/user/CLionProjects/B_device/AmBe.txt";
 
     G4String theEnd = "gun.txt";
 

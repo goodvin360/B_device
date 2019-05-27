@@ -21,6 +21,7 @@ public:
       void EndOfEventAction(const G4Event* anEvent);
       void AddEnDep1 (G4double en1);
       void AddEnDep2 (G4double en2);
+      void AddEnDep3 (G4double en3);
 
 
 
@@ -28,6 +29,7 @@ private:
       RunAct *run;
       G4double EnergyDep1;
       G4double EnergyDep2;
+      G4double EnergyDep3;
 
 };
 

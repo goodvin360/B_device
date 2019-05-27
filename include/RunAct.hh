@@ -26,6 +26,8 @@ public:
 
     void AddEvent2(G4double energy2);
 
+    void AddEvent3(G4double energy3);
+
     int nStep = 10000;
     G4double Emax = 10.0*MeV;
     double a = 0.00001;
@@ -37,6 +39,8 @@ private:
     std::map <G4double, G4int> *result1;
 
     std::map <G4double, G4int> *result2;
+
+    std::map <G4double, G4int> *result3;
 
 };
 
