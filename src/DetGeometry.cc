@@ -8,6 +8,7 @@
 #include "G4RotationMatrix.hh"
 #include "G4Sphere.hh"
 #include "G4SubtractionSolid.hh"
+#include "G4MultiUnion.hh"
 
 DetGeometry::DetGeometry() {
 
@@ -44,110 +45,6 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
                         0);
 
 
-//create an SPHERE container
-
-//    G4Material*sc_mat = nist->FindOrBuildMaterial("G4_Fe");
-//
-//    G4double size_of_sc = 1*cm;
-//
-//    G4ThreeVector sc_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
-//
-//    G4Sphere*spcont = new G4Sphere("SpCont", 100*size_of_sc, 113*size_of_sc, 0.*deg, 360.*deg, 0.*deg, 180.*deg);
-//
-//    G4RotationMatrix* myRotation = new G4RotationMatrix();
-//    myRotation->rotateX(0.*deg);
-//    myRotation->rotateY(0.*deg);
-//    myRotation->rotateZ(0.*rad);
-//
-//    G4LogicalVolume*logicSpCont = new G4LogicalVolume(spcont, sc_mat, "SpCont");
-//
-//    G4VisAttributes*logicSpContcolour = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
-//
-//    logicSpCont->SetVisAttributes(logicSpContcolour);
-//
-//
-//    new G4PVPlacement(myRotation,
-//                      sc_pos,
-//                      logicSpCont,
-//                      "SpCont",
-//                      logicWorld,
-//                      false,
-//                      0);
-
-
-   // create an complex BOX container
-
-//    G4double box_size = 1*cm;
-//
-//    G4Material*sub_mat1 = nist->FindOrBuildMaterial("G4_Fe");
-//
-//    G4ThreeVector sub1_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
-//
-//    G4Box*box0 = new G4Box("Box0", 100*box_size, 100*box_size, 100*box_size);
-//
-//    G4Box*box1 = new G4Box("Box1", 103*box_size, 103*box_size, 103*box_size);
-//
-//    G4SubtractionSolid*Sub1 = new G4SubtractionSolid ("Sub1", box1, box0);
-//    G4LogicalVolume*logicSub1 = new G4LogicalVolume(Sub1, sub_mat1, "Sub1");
-//    G4VisAttributes*logicSub1colour = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
-//    logicSub1->SetVisAttributes(logicSub1colour);
-//
-//
-//    new G4PVPlacement(0,
-//                      sub1_pos,
-//                      logicSub1,
-//                      "Sub1",
-//                      logicWorld,
-//                      false,
-//                      0);
-//
-//    G4Material*sub_mat2 = nist->FindOrBuildMaterial("G4_CONCRETE");
-//
-//    G4ThreeVector sub2_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
-//
-//    G4Box*box3 = new G4Box("Box3", 104*box_size, 104*box_size, 104*box_size);
-//
-//    G4Box*box4 = new G4Box("Box4", 109*box_size, 109*box_size, 109*box_size);
-//
-//    G4SubtractionSolid*Sub2 = new G4SubtractionSolid ("Sub2", box4, box3);
-//    G4LogicalVolume*logicSub2 = new G4LogicalVolume(Sub2, sub_mat2, "Sub2");
-//    G4VisAttributes*logicSub2colour = new G4VisAttributes(G4Colour(133.0, 133.0, 133.0));
-//    logicSub2->SetVisAttributes(logicSub2colour);
-//
-//
-//    new G4PVPlacement(0,
-//                      sub2_pos,
-//                      logicSub2,
-//                      "Sub2",
-//                      logicWorld,
-//                      false,
-//                      0);
-//
-//    G4Material*sub_mat3 = nist->FindOrBuildMaterial("G4_Fe");
-//
-//    G4ThreeVector sub3_pos = G4ThreeVector(0*cm, 0*cm, 0*cm);
-//
-//    G4Box*box5 = new G4Box("Box5", 110*box_size, 110*box_size, 110*box_size);
-//
-//    G4Box*box6 = new G4Box("Box6", 113*box_size, 113*box_size, 113*box_size);
-//
-//    G4SubtractionSolid*Sub3 = new G4SubtractionSolid ("Sub3", box6, box5);
-//    G4LogicalVolume*logicSub3 = new G4LogicalVolume(Sub3, sub_mat3, "Sub3");
-//    G4VisAttributes*logicSub3colour = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
-//    logicSub3->SetVisAttributes(logicSub3colour);
-//
-//
-//    new G4PVPlacement(0,
-//                      sub3_pos,
-//                      logicSub3,
-//                      "Sub3",
-//                      logicWorld,
-//                      false,
-//                      0);
-
-
-
-
 // Define meterials (Boric Acid, Water, Helium, Am-Be, etc.)
 
     G4String name,symbol;
@@ -174,11 +71,13 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     pressure = 1.*atmosphere;
     H2O_density = 1*g/cm3;
     mix_volume = 1000*cm3;
-    H3BO3_mass = 55*g;
+    H3BO3_mass = 0*g;
     H3BO3_density = 1.435*g/cm3;
     H2O_volume = mix_volume-H3BO3_mass/H3BO3_density;
     mix_density = (H3BO3_mass+H2O_density*H2O_volume)/mix_volume;
 //    G4cout << "mix density  is " << mix_density/(g/cm3) << G4endl;
+
+    temperature = AmBe_temp = He3_temp = 300.* kelvin;
 
     //Define common elements
     aH = 1.00784*g/mole;
@@ -271,24 +170,26 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     // define distances
 
-    G4double Rtube, dtube, Htube, Rcnt, dcnt, Hcnt, dshld,
+    G4double Rtube, dtube, Htube, Rcnt, dcnt, Hcnt, dshld, Lsrc,
     Zsrc, Xsrc, Ysrc,
     Ztube, Xtube, Ytube,
     Zcnt1, Xcnt1, Ycnt1,
     Zcnt2, Xcnt2, Ycnt2;
 
     Rtube=6;
-    dtube=0.4;
+    dtube=1.3;
     Htube=15;
-    Rcnt=1.5;
+    Rcnt=1.6;
     dcnt=0.1;
     Hcnt=11;
     dshld=0.1;
+    Lsrc=4.5;
 
-    Xsrc=0, Ysrc=0, Zsrc=(Rtube+6);
-    Xtube=0, Ytube=0, Ztube=0;
-    Xcnt1=0, Ycnt1=-2, Zcnt1=-(Rtube+2);
-    Xcnt2=0, Ycnt2=2, Zcnt2=-(Rtube+2);
+
+    Xsrc=0, Ysrc=0, Zsrc=0;
+    Xtube=0, Ytube=0, Ztube=Lsrc;
+    Xcnt1=0, Ycnt1=0, Zcnt1=Lsrc+3.6;
+    Xcnt2=0, Ycnt2=0, Zcnt2=Lsrc-1;
 
 
 
@@ -296,7 +197,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     //Define Boric Acid mix with Water (place in space)
 
-    G4ThreeVector Mix_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
+ /*   G4ThreeVector Mix_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
 
     G4Tubs*Mix = new G4Tubs("Mixture", 0*cm, (Rtube-dtube)*cm, Htube*cm, 0*deg, 360*deg);
 
@@ -312,13 +213,49 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
                       "Mixture",
                       logicWorld,
                       false,
-                      0);
+                      0);*/
+
+        G4ThreeVector Cnt1pos = G4ThreeVector(3.6*cm, 0*cm, 0*cm);
+        G4ThreeVector Cnt2pos = G4ThreeVector(-1*cm, 0*cm, 0*cm);
+        G4ThreeVector Src_pos = G4ThreeVector(-Lsrc*cm, 0*cm, 0*cm);
+        G4RotationMatrix* yRot = new G4RotationMatrix;
+
+       G4ThreeVector Mix_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
+
+       G4Tubs*Mix0 = new G4Tubs("Mixture1", 0*cm, Rtube*cm, Htube*cm, 0*deg, 360*deg);
+
+       G4Tubs*Cnt1 = new G4Tubs("Cnt1", 0*cm, Rcnt*cm, Hcnt*cm, 0*deg, 360*deg);
+
+        G4Tubs*Cnt2 = new G4Tubs("Cnt2", 0*cm, Rcnt*cm, Hcnt*cm, 0*deg, 360*deg);
+
+        G4Tubs*Src = new G4Tubs("Src", 0*cm, 0.3*cm, 0.3*cm, 0*deg, 360*deg);
+
+       G4SubtractionSolid*Mix1 = new G4SubtractionSolid("Mixture1", Mix0, Cnt1, yRot, Cnt1pos);
+
+        G4SubtractionSolid*Mix2 = new G4SubtractionSolid("Mixture2", Mix1, Cnt2, yRot, Cnt2pos);
+
+        G4SubtractionSolid*Mix = new G4SubtractionSolid("Mixture", Mix2, Src, yRot, Src_pos);
+
+       G4LogicalVolume*logicMix = new G4LogicalVolume(Mix, Mix_mat, "Mixture");
+
+       G4VisAttributes*logicVisMix = new G4VisAttributes(G4Colour(5, 0.5, 0.5));
+
+       logicMix->SetVisAttributes(logicVisMix);
+
+       new G4PVPlacement(myRotation,
+                         Mix_pos,
+                         logicMix,
+                         "Mixture",
+                         logicWorld,
+                         false,
+                         0);
+
 
     // create an Tube part (Mixture housing)
 
     G4ThreeVector Tube_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
 
-    G4Tubs*Tube = new G4Tubs("MixTube", (Rtube-dtube)*cm, Rtube*cm, Htube*cm, 0*deg, 360*deg);
+    G4Tubs*Tube = new G4Tubs("MixTube", Rtube*cm, (Rtube+dtube)*cm, Htube*cm, 0*deg, 360*deg);
 
     G4LogicalVolume*logicTube = new G4LogicalVolume(Tube, Tube_mat, "MixTube");
 
@@ -427,6 +364,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
 
     // create an Cadmium shield for counter #1
+/*
 
     G4ThreeVector Shield_pos = G4ThreeVector(Xcnt1*cm, Ycnt1*cm, Zcnt1*cm);
 
@@ -450,13 +388,14 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
                       false,
                       0);
 
+*/
 
 
     // create an SOURSE
 
     G4ThreeVector Source_pos = G4ThreeVector(Xsrc*cm, Ysrc*cm, Zsrc*cm);
 
-    G4Tubs*Source = new G4Tubs("Source", 0*cm, 1.6*cm, 1.6*cm, 0*deg, 360*deg);
+    G4Tubs*Source = new G4Tubs("Source", 0*cm, 0.3*cm, 0.3*cm, 0*deg, 360*deg);
 
     G4LogicalVolume*logicSource = new G4LogicalVolume(Source, AmBe_mat, "Source");
 //    G4LogicalVolume*logicSource = new G4LogicalVolume(Source, nist->FindOrBuildMaterial("G4_Galactic"), "Source");

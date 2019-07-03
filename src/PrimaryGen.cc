@@ -214,12 +214,12 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
 
     //set the cylindric source particle distribution
 
-    G4double R=1.5*cm;
+    G4double R=0.3*cm;
     G4double cosTheta1 = 2*G4UniformRand()-1., phi1 = twopi*G4UniformRand();
     G4double sinTheta1 = std::sqrt(1. - cosTheta1*cosTheta1);
     G4double ux = R*sinTheta1*std::sin(phi1),
             uy = R*cosTheta1,
-            uz = 12*cm+(2*G4UniformRand()-1)*1.5*cm;
+            uz =(2*G4UniformRand()-1)*0.3*cm;
 
     gun->SetParticlePosition(G4ThreeVector(ux,uy,uz));
 

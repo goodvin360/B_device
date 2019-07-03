@@ -37,6 +37,30 @@ void StepAct::UserSteppingAction(const G4Step *aStep)
         event->AddEnDep3(aStep->GetTotalEnergyDeposit());
     };
 
+    if ((aStep->GetPreStepPoint()->GetPhysicalVolume()->GetLogicalVolume()->GetName()=="He3_gas1") &&
+        (aStep->GetTrack()->GetDynamicParticle()->GetParticleDefinition()->GetParticleName()=="neutron") &&
+        (aStep->GetPostStepPoint()->GetStepStatus()==fGeomBoundary)
+            )
+
+    {
+        event->AddEnDep4(aStep->GetTrack()->GetKineticEnergy());
+        event->AddEnDep4_1(aStep->GetTrack()->GetKineticEnergy());
+        event->AddEnDep4_2(aStep->GetTrack()->GetKineticEnergy());
+    };
+
+
+    if ((aStep->GetPreStepPoint()->GetPhysicalVolume()->GetLogicalVolume()->GetName()=="He3_gas2") &&
+        (aStep->GetTrack()->GetDynamicParticle()->GetParticleDefinition()->GetParticleName()=="neutron") &&
+        (aStep->GetPostStepPoint()->GetStepStatus()==fGeomBoundary)
+            )
+
+    {
+        event->AddEnDep5(aStep->GetTrack()->GetKineticEnergy());
+        event->AddEnDep5_1(aStep->GetTrack()->GetKineticEnergy());
+        event->AddEnDep5_2(aStep->GetTrack()->GetKineticEnergy());
+    };
+
+
 
 }
 
