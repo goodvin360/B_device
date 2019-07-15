@@ -19,7 +19,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
-add_executable(B_device main.cc ${sources} ${headers} include/PrimaryGenMessenger.hh src/PrimaryGenMessenger.cc)
+add_executable(B_device main.cc ${sources} ${headers}
+        include/PrimaryGenMessenger.hh
+        src/PrimaryGenMessenger.cc
+        include/RunActMessenger.hh
+        src/RunActMessenger.cc include/GeometryMessenger.hh src/GeometryMessenger.cc)
 target_link_libraries(B_device ${Geant4_LIBRARIES})
 
 

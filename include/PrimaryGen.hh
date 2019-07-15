@@ -72,7 +72,7 @@ private:
         Step = newValue;
     }
 
-    G4String outerspectrapath = "/home/user/CLionProjects/B_device/AmBe.txt";
+    G4String outerspectrapath = "/home/user/CLionProjects/B_device/PuBe.txt";
 
     G4String theEnd = "gun.txt";
 

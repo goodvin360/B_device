@@ -8,10 +8,13 @@
 #include "Run.hh"
 #include "EventAct.hh"
 #include <map>
+#include "RunActMessenger.hh"
 
 using namespace std;
 
 class G4Run;
+class RunActMessenger;
+
 
 
 class RunAct : public G4UserRunAction {
@@ -39,6 +42,10 @@ public:
     void AddEvent5_1(G4double energy5_1);
 
     void AddEvent5_2(G4double energy5_2);
+
+    void SetNewPath(G4String newPath);
+
+    G4String foldername = "/mnt/hgfs/VMplayer/B_device/Summ.txt";
 
     int nStep = 10000;
     G4double Emax = 10.0*MeV;
@@ -70,6 +77,8 @@ private:
     std::map <G4double, G4int> *result5_1;
 
     std::map <G4double, G4int> *result5_2;
+
+    RunActMessenger *runactMessenger;
 
 };
 

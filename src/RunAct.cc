@@ -29,6 +29,8 @@ RunAct::RunAct()
 
     result5_2 = new std::map<G4double, G4int>;
 
+    runactMessenger = new RunActMessenger(this);
+
 
 
 
@@ -53,6 +55,9 @@ RunAct::~RunAct()
     delete result5_1;
 
     delete result5_2;
+
+    delete runactMessenger;
+
 
 
 }
@@ -233,7 +238,7 @@ void RunAct::EndOfRunAction(const G4Run *aRun)
 
 
 
-    fstream fout6("/mnt/hgfs/VMplayer/B_device/Summ.txt", ios::out);
+    fstream fout6(foldername, ios::out);
     for (int i =0; i <nStep; i++)
     {
         for(int j=0; j<16; j++)
@@ -496,4 +501,7 @@ void RunAct::AddEvent5_2(G4double energy5_2)
 }
 
 
+void RunAct::SetNewPath(G4String newPath) {
+    foldername = newPath;
 
+}

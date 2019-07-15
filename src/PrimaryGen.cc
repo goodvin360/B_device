@@ -283,7 +283,7 @@ void PrimaryGen::GeneratePrimaries(G4Event* anEvent)
     {
         cout << "Amount of shooted particle: " << Sum << endl;
         cout << "Time from start, s = " << t / 1000000 << endl;
-        cout << "Time left, s = " << dt * ((PCounts-Sum) /100) << endl;
+//        cout << "Time left, s = " << dt * ((PCounts-Sum) /100) << endl;
         cout << endl;
         Counter = 0;
     }

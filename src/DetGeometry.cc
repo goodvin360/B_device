@@ -9,14 +9,30 @@
 #include "G4Sphere.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4MultiUnion.hh"
+#include <G4GeometryManager.hh>
+#include <G4RunManager.hh>
+#include <GeometryMessenger.hh>
+
+
 
 DetGeometry::DetGeometry() {
 
+    geometryMessenger = new GeometryMessenger(this);
+
 }
 
-DetGeometry::~DetGeometry() {}
+DetGeometry::~DetGeometry() {
+
+    delete geometryMessenger;
+
+}
 
 G4VPhysicalVolume* DetGeometry::Construct(){
+
+    G4GeometryManager::GetInstance()->OpenGeometry();
+    G4PhysicalVolumeStore::GetInstance()->Clean();
+    G4LogicalVolumeStore::GetInstance()->Clean();
+    G4SolidStore::GetInstance()->Clean();
 
     G4NistManager* nist = G4NistManager::Instance();
 
@@ -46,14 +62,13 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
 
 // Define meterials (Boric Acid, Water, Helium, Am-Be, etc.)
-
     G4String name,symbol;
     G4double abundance, aH, aO, z, ncomponents,
     H3BO3_density, H3BO3_mass,
     H2O_density, H2O_volume,
     mix_volume, mix_density,
-    Am_density, Be_density, AmBe_density,
-    AmBe_temp, AmBe_press,
+    Am_density, Be_density, AmBe_density, Pu_density, PuBe_density,
+    AmBe_temp, AmBe_press, PuBe_temp, PuBe_press,
     temperature, pressure, fractionmass;
     G4int nIsotopes,natoms;
     G4double He3_temp, He3_press, He3_density;
@@ -64,6 +79,11 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     AmBe_press = 1*atmosphere;
     AmBe_temp = 300*kelvin;
 
+    Pu_density = 19.84*g/cm3;
+    PuBe_density = 4.2124;
+    PuBe_press = 1*atmosphere;
+    PuBe_temp = 300*kelvin;
+
     He3_temp = 300*kelvin;
     He3_press = 4*atmosphere;
     He3_density = 0.0005*g/cm3;
@@ -71,13 +91,13 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     pressure = 1.*atmosphere;
     H2O_density = 1*g/cm3;
     mix_volume = 1000*cm3;
-    H3BO3_mass = 0*g;
+    H3BO3_mass = C*g;
     H3BO3_density = 1.435*g/cm3;
     H2O_volume = mix_volume-H3BO3_mass/H3BO3_density;
     mix_density = (H3BO3_mass+H2O_density*H2O_volume)/mix_volume;
 //    G4cout << "mix density  is " << mix_density/(g/cm3) << G4endl;
 
-    temperature = AmBe_temp = He3_temp = 300.* kelvin;
+    temperature = AmBe_temp = He3_temp = PuBe_temp = 300.* kelvin;
 
     //Define common elements
     aH = 1.00784*g/mole;
@@ -138,6 +158,15 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     G4Material*Am241_mat = new G4Material(name="Am_mat", Am_density, ncomponents = 1, kStateSolid, AmBe_temp, AmBe_press);
     Am241_mat->AddElement(elAm241, natoms = 1);
 
+    //Define Pu239 isotope
+    G4Isotope*Pu239 = new G4Isotope(name="Pu239", 94, 239, 239.052*g/mole);
+    //Define element from Am241 isotope
+    G4Element* elPu239 = new G4Element(name="Pu239", symbol="Pu", nIsotopes=1);
+    elPu239->AddIsotope(Pu239,abundance= 100*perCent);
+    //Define Pu239 material
+    G4Material*Pu239_mat = new G4Material(name="Pu_mat", Pu_density, ncomponents = 1, kStateSolid, PuBe_temp, PuBe_press);
+    Pu239_mat->AddElement(elPu239, natoms = 1);
+
     //Define Be9 isotope
     G4Isotope*Be9 = new G4Isotope(name="Be9", 4, 9, 241.057*g/mole);
     //Define element from Be9 isotope
@@ -151,6 +180,11 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     G4Material*AmBe_mat = new G4Material(name="AmBe_mat", AmBe_density, ncomponents = 2, kStateSolid, AmBe_temp, AmBe_press);
     AmBe_mat->AddMaterial(Am241_mat,fractionmass = 20*perCent);
     AmBe_mat->AddMaterial(Be9_mat,fractionmass = 80*perCent);
+
+    //Define PuBe material
+    G4Material*PuBe_mat = new G4Material(name="PuBe_mat", PuBe_density, ncomponents = 2, kStateSolid, PuBe_temp, PuBe_press);
+    PuBe_mat->AddMaterial(Pu239_mat,fractionmass = 20*perCent);
+    PuBe_mat->AddMaterial(Be9_mat,fractionmass = 80*perCent);
 
     //Define material of Helium counter housing
     G4Material*Counter_mat = nist->FindOrBuildMaterial("G4_Al");
@@ -177,7 +211,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     Zcnt2, Xcnt2, Ycnt2;
 
     Rtube=6;
-    dtube=1.3;
+    dtube=0.4;
     Htube=15;
     Rcnt=1.6;
     dcnt=0.1;
@@ -397,7 +431,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     G4Tubs*Source = new G4Tubs("Source", 0*cm, 0.3*cm, 0.3*cm, 0*deg, 360*deg);
 
-    G4LogicalVolume*logicSource = new G4LogicalVolume(Source, AmBe_mat, "Source");
+    G4LogicalVolume*logicSource = new G4LogicalVolume(Source, PuBe_mat, "Source");
 //    G4LogicalVolume*logicSource = new G4LogicalVolume(Source, nist->FindOrBuildMaterial("G4_Galactic"), "Source");
 
     G4VisAttributes*logicVisSource = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
@@ -416,4 +450,12 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
 
     return physWorld;
+
 }
+
+void DetGeometry::SetNewC(G4double newValue) {
+    C = newValue;
+    G4RunManager::GetRunManager()->DefineWorldVolume(Construct());
+    G4RunManager::GetRunManager()->ReinitializeGeometry();
+}
+
