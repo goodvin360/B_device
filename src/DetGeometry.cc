@@ -97,7 +97,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     mix_density = (H3BO3_mass+H2O_density*H2O_volume)/mix_volume;
 //    G4cout << "mix density  is " << mix_density/(g/cm3) << G4endl;
 
-    temperature = AmBe_temp = He3_temp = PuBe_temp = 300.* kelvin;
+    temperature = AmBe_temp = He3_temp = PuBe_temp = 425.* kelvin;
 
     //Define common elements
     aH = 1.00784*g/mole;
