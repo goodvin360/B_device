@@ -113,6 +113,7 @@ void RunAct::EndOfRunAction(const G4Run *aRun)
         sum[i] = new double[16];
     }
 
+
     fstream fout1("/mnt/hgfs/VMplayer/B_device/Source.txt", ios::out);
     for (auto it1: *result1)
         fout1 << it1.first << " " << it1.second << '\n';
@@ -238,18 +239,68 @@ void RunAct::EndOfRunAction(const G4Run *aRun)
 
 
 
+    sum[0][9] = 0;
+
+    double one = 0;
+    double two = 0;
+
+    for (int i=0; i<nStep; i++)
+    {
+        two+=sum[i][9];
+    }
+
+    sum[0][7] = two;
+
+    for (int i=0; i<nStep; i++)
+    {
+        one+=sum[i][7];
+    }
+
+    sum[0][5] = one;
+
+
+    one = 0;
+    two = 0;
+
+    sum[0][15] = 0;
+
+    double three = 0;
+    double four = 0;
+
+    for (int i=0; i<nStep; i++)
+    {
+        three+=sum[i][15];
+    }
+
+    sum[0][13] = three;
+
+    for (int i=0; i<nStep; i++)
+    {
+        four+=sum[i][13];
+    }
+
+    sum[0][11] = four;
+
+    three = 0;
+    four = 0;
+
+
+
     fstream fout6(foldername, ios::out);
     for (int i =0; i <nStep; i++)
     {
         for(int j=0; j<16; j++)
         {
-        fout6 << sum[i][j] << " ";
+            fout6 << sum[i][j] << " ";
         }
 
         fout6 << '\n';
     }
 
     fout6.close();
+
+    for (int i = 0; i < nStep; i++) { delete[] sum[i]; }
+
 
 
     /////////////////////// N O R M A L I S A T I O N      P R O C E S S  //////////////////////////////////////////////

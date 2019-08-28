@@ -89,13 +89,13 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
     He3_density = 0.0005*g/cm3;
     temperature = 300.*kelvin;
     pressure = 1.*atmosphere;
-    H2O_density = 1*g/cm3;
+    H2O_density = 0.9351*g/cm3;
     mix_volume = 1000*cm3;
     H3BO3_mass = C*g;
     H3BO3_density = 1.435*g/cm3;
     H2O_volume = mix_volume-H3BO3_mass/H3BO3_density;
     mix_density = (H3BO3_mass+H2O_density*H2O_volume)/mix_volume;
-//    G4cout << "mix density  is " << mix_density/(g/cm3) << G4endl;
+    G4cout << "mix density  is " << mix_density/(g/cm3) << G4endl;
 
     temperature = AmBe_temp = He3_temp = PuBe_temp = 425.* kelvin;
 
@@ -212,7 +212,7 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     Rtube=6;
     dtube=0.4;
-    Htube=15;
+    Htube=100;
     Rcnt=1.6;
     dcnt=0.1;
     Hcnt=11;
@@ -222,10 +222,31 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
 
     Xsrc=0, Ysrc=0, Zsrc=0;
     Xtube=0, Ytube=0, Ztube=Lsrc;
-    Xcnt1=0, Ycnt1=0, Zcnt1=Lsrc+3.6;
-    Xcnt2=0, Ycnt2=0, Zcnt2=Lsrc-1;
+    Xcnt1=0, Ycnt1=0, Zcnt1=Lsrc-1;
+    Xcnt2=0, Ycnt2=0, Zcnt2=Lsrc+3.6;
 
+// create an Tube part (Mixture housing)
 
+    G4ThreeVector Tube_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
+
+    G4Tubs*Tube01 = new G4Tubs("MixTube01", 0*cm, (Rtube+dtube)*cm, (Hcnt+1+dtube)*cm, 0*deg, 360*deg);
+    G4Tubs*Tube02 = new G4Tubs("MixTube02", 0*cm, Rtube*cm, (Hcnt+1)*cm, 0*deg, 360*deg);
+
+    G4SubtractionSolid*Tube = new G4SubtractionSolid("MixTube", Tube01, Tube02);
+
+    G4LogicalVolume*logicTube = new G4LogicalVolume(Tube, Tube_mat, "MixTube");
+
+    G4VisAttributes*logicVisTube = new G4VisAttributes(G4Colour(0.1, 0.1, 0.8));
+
+    logicTube->SetVisAttributes(logicVisTube);
+
+    new G4PVPlacement(myRotation,
+                      Tube_pos,
+                      logicTube,
+                      "MixTube",
+                      logicWorld,
+                      false,
+                      0);
 
 #ifdef Tube_With_Mixture
 
@@ -249,58 +270,63 @@ logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
                       false,
                       0);*/
 
-        G4ThreeVector Cnt1pos = G4ThreeVector(3.6*cm, 0*cm, 0*cm);
-        G4ThreeVector Cnt2pos = G4ThreeVector(-1*cm, 0*cm, 0*cm);
-        G4ThreeVector Src_pos = G4ThreeVector(-Lsrc*cm, 0*cm, 0*cm);
-        G4RotationMatrix* yRot = new G4RotationMatrix;
+//        G4ThreeVector Cnt1pos = G4ThreeVector(3.6*cm, 0*cm, 0*cm);
+//        G4ThreeVector Cnt2pos = G4ThreeVector(-1*cm, 0*cm, 0*cm);
+//        G4ThreeVector Src_pos = G4ThreeVector(-Lsrc*cm, 0*cm, 0*cm);
+//        G4RotationMatrix* yRot = new G4RotationMatrix;
+//
+//       G4ThreeVector Mix_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
+//
+//       G4Tubs*Mix0 = new G4Tubs("Mixture1", 0*cm, Rtube*cm, Htube*cm, 0*deg, 360*deg);
+//
+//       G4Tubs*Cnt1 = new G4Tubs("Cnt1", 0*cm, Rcnt*cm, Hcnt*cm, 0*deg, 360*deg);
+//
+//        G4Tubs*Cnt2 = new G4Tubs("Cnt2", 0*cm, Rcnt*cm, Hcnt*cm, 0*deg, 360*deg);
+//
+//        G4Tubs*Src = new G4Tubs("Src", 0*cm, 0.3*cm, 0.3*cm, 0*deg, 360*deg);
+//
+//       G4SubtractionSolid*Mix1 = new G4SubtractionSolid("Mixture1", Mix0, Cnt1, yRot, Cnt1pos);
+//
+//        G4SubtractionSolid*Mix2 = new G4SubtractionSolid("Mixture2", Mix1, Cnt2, yRot, Cnt2pos);
+//
+//        G4SubtractionSolid*Mix = new G4SubtractionSolid("Mixture", Mix2, Src, yRot, Src_pos);
+//
+//       G4LogicalVolume*logicMix = new G4LogicalVolume(Mix, Mix_mat, "Mixture");
+//
+//       G4VisAttributes*logicVisMix = new G4VisAttributes(G4Colour(5, 0.5, 0.5));
+//
+//       logicMix->SetVisAttributes(logicVisMix);
+//
+//       new G4PVPlacement(myRotation,
+//                         Mix_pos,
+//                         logicMix,
+//                         "Mixture",
+//                         logicWorld,
+//                         false,
+//                         0);
 
-       G4ThreeVector Mix_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
-
-       G4Tubs*Mix0 = new G4Tubs("Mixture1", 0*cm, Rtube*cm, Htube*cm, 0*deg, 360*deg);
-
-       G4Tubs*Cnt1 = new G4Tubs("Cnt1", 0*cm, Rcnt*cm, Hcnt*cm, 0*deg, 360*deg);
-
-        G4Tubs*Cnt2 = new G4Tubs("Cnt2", 0*cm, Rcnt*cm, Hcnt*cm, 0*deg, 360*deg);
-
-        G4Tubs*Src = new G4Tubs("Src", 0*cm, 0.3*cm, 0.3*cm, 0*deg, 360*deg);
-
-       G4SubtractionSolid*Mix1 = new G4SubtractionSolid("Mixture1", Mix0, Cnt1, yRot, Cnt1pos);
-
-        G4SubtractionSolid*Mix2 = new G4SubtractionSolid("Mixture2", Mix1, Cnt2, yRot, Cnt2pos);
-
-        G4SubtractionSolid*Mix = new G4SubtractionSolid("Mixture", Mix2, Src, yRot, Src_pos);
-
-       G4LogicalVolume*logicMix = new G4LogicalVolume(Mix, Mix_mat, "Mixture");
-
-       G4VisAttributes*logicVisMix = new G4VisAttributes(G4Colour(5, 0.5, 0.5));
-
-       logicMix->SetVisAttributes(logicVisMix);
-
-       new G4PVPlacement(myRotation,
-                         Mix_pos,
-                         logicMix,
-                         "Mixture",
-                         logicWorld,
-                         false,
-                         0);
 
 
-    // create an Tube part (Mixture housing)
 
-    G4ThreeVector Tube_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
 
-    G4Tubs*Tube = new G4Tubs("MixTube", Rtube*cm, (Rtube+dtube)*cm, Htube*cm, 0*deg, 360*deg);
+    G4ThreeVector Mix_pos = G4ThreeVector(Xtube*cm, Ytube*cm, Ztube*cm);
 
-    G4LogicalVolume*logicTube = new G4LogicalVolume(Tube, Tube_mat, "MixTube");
+    G4Tubs*Mix01 = new G4Tubs("Mixture01", 0*cm, 100*cm, Htube*cm, 0*deg, 360*deg);
 
-    G4VisAttributes*logicVisTube = new G4VisAttributes(G4Colour(0.1, 0.1, 0.8));
+    G4Tubs*Mix02 = new G4Tubs("Mixture02", 0*cm, (Rtube+dtube)*cm, (Hcnt+1+dtube)*cm, 0*deg, 360*deg);
 
-    logicTube->SetVisAttributes(logicVisTube);
+    G4SubtractionSolid*Mix = new G4SubtractionSolid("Mixture", Mix01, Mix02);
+
+    G4LogicalVolume*logicMix = new G4LogicalVolume(Mix, Mix_mat, "Mixture");
+
+    G4VisAttributes*logicVisMix = new G4VisAttributes(G4Colour(5, 0.5, 0.5));
+
+    logicMix->SetVisAttributes(logicVisMix);
 
     new G4PVPlacement(myRotation,
-                      Tube_pos,
-                      logicTube,
-                      "MixTube",
+                      Mix_pos,
+                      logicMix,
+                      "Mixture",
                       logicWorld,
                       false,
                       0);

@@ -1,48 +1,48 @@
 /my_dir2/SetCountsStep 10000
 /my_dir3/SetAcidMass 0
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ0.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 5
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ5.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 10
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ10.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 15
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ15.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 20
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ20.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 25
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ25.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 30
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ30.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 35
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ35.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 40
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ40.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 45
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ45.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 50
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ50.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
 
 /my_dir3/SetAcidMass 55
 /my_dir4/SetNewPath /mnt/hgfs/VMplayer/B_device/Summ55.txt
-/run/beamOn 5000000
+/run/beamOn 1000000
