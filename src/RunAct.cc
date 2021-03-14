@@ -291,7 +291,7 @@ void RunAct::EndOfRunAction(const G4Run *aRun)
     {
         for(int j=0; j<16; j++)
         {
-            fout6 << sum[i][j] << " ";
+            fout6 << sum[i][j] << '\t';
         }
 
         fout6 << '\n';
